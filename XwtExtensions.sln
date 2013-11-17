@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XwtExtensions", "XwtExtensions\XwtExtensions.csproj", "{B6530788-3904-4B07-B8EA-354871E4558F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsTest", "ExtensionsTest\ExtensionsTest.csproj", "{4B56EDE7-14D8-4347-B82C-8B5E760C744D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAXLib", "YAXLib-2.12-Src\YAXLib\YAXLib.csproj", "{F1C4D174-C948-4D18-A125-F6855EF55683}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6530788-3904-4B07-B8EA-354871E4558F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6530788-3904-4B07-B8EA-354871E4558F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6530788-3904-4B07-B8EA-354871E4558F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6530788-3904-4B07-B8EA-354871E4558F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B56EDE7-14D8-4347-B82C-8B5E760C744D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B56EDE7-14D8-4347-B82C-8B5E760C744D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B56EDE7-14D8-4347-B82C-8B5E760C744D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B56EDE7-14D8-4347-B82C-8B5E760C744D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C4D174-C948-4D18-A125-F6855EF55683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C4D174-C948-4D18-A125-F6855EF55683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C4D174-C948-4D18-A125-F6855EF55683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C4D174-C948-4D18-A125-F6855EF55683}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

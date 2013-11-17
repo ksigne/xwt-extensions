@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6530788-3904-4B07-B8EA-354871E4558F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XwtExtensions</RootNamespace>
+    <AssemblyName>XwtExtensions</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpEval, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CSharpEval.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Xwt, Version=0.1.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\GitHub\xwt\Xwt\bin\Debug\Xwt.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bindings\CellViewFactory.cs" />
+    <Compile Include="Bindings\DataField.cs" />
+    <Compile Include="Bindings\TreeNode.cs" />
+    <Compile Include="Bindings\ListBinding.cs" />
+    <Compile Include="Bindings\TreeStoreWrapper.cs" />
+    <Compile Include="Markup\ComplexWidgets\XwtTreeViewNode.cs" />
+    <Compile Include="Markup\ComplexWidgets\XwtListViewNode.cs" />
+    <Compile Include="Markup\ComplexWidgets\XwtComboBoxNode.cs" />
+    <Compile Include="Markup\ComplexWidgets\XwtColumnDefinitionNode.cs" />
+    <Compile Include="Markup\ComplexWidgets\XwtSimpleBindingNode.cs" />
+    <Compile Include="Markup\Layouts\XwtNotebookTabNode.cs" />
+    <Compile Include="Markup\Layouts\XwtNotebookNode.cs" />
+    <Compile Include="Markup\Layouts\XwtExpanderNode.cs" />
+    <Compile Include="Markup\Layouts\XwtScrollViewNode.cs" />
+    <Compile Include="Markup\Layouts\XwtPanedNode.cs" />
+    <Compile Include="Markup\Layouts\XwtFrameNode.cs" />
+    <Compile Include="Markup\Layouts\XwtTableNode.cs" />
+    <Compile Include="Markup\Layouts\XwtBoxNode.cs" />
+    <Compile Include="Markup\Layouts\XwtSeparatorNode.cs" />
+    <Compile Include="Markup\Menu\XwtSeparatorMenuItemNode.cs" />
+    <Compile Include="Markup\Menu\XwtCheckMenuItemNode.cs" />
+    <Compile Include="Markup\Menu\XwtRadioMenuItemNode.cs" />
+    <Compile Include="Markup\Menu\XwtMenuNode.cs" />
+    <Compile Include="Markup\Menu\XwtMenuItemNode.cs" />
+    <Compile Include="Markup\Widgets\XwtDatePicker.cs" />
+    <Compile Include="Markup\Widgets\XwtColorSelector.cs" />
+    <Compile Include="Markup\Widgets\XwtPasswordNode.cs" />
+    <Compile Include="Markup\Widgets\XwtMarkdownNode.cs" />
+    <Compile Include="Markup\Widgets\XwtProgressBarNode.cs" />
+    <Compile Include="Markup\Widgets\XwtSpinnerNode.cs" />
+    <Compile Include="Markup\Widgets\XwtSpinButtonNode.cs" />
+    <Compile Include="Markup\Widgets\XwtRadioButtonNode.cs" />
+    <Compile Include="Markup\Widgets\XwtButtonNode.cs" />
+    <Compile Include="Markup\Widgets\XwtCheckBoxNode.cs" />
+    <Compile Include="Markup\Widgets\XwtLabelNode.cs" />
+    <Compile Include="Markup\Widgets\XwtEntryNode.cs" />
+    <Compile Include="Markup\Widgets\XwtSliderNode.cs" />
+    <Compile Include="Markup\WindowController.cs" />
+    <Compile Include="Markup\WindowFactory.cs" />
+    <Compile Include="Markup\XwtWidgetNode.cs" />
+    <Compile Include="Markup\XwtWindowNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Markup\Drawing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YAXLib-2.12-Src\YAXLib\YAXLib.csproj">
+      <Project>{f1c4d174-c948-4d18-a125-f6855ef55683}</Project>
+      <Name>YAXLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
