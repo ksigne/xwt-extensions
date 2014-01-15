@@ -112,6 +112,8 @@ namespace YAXLib
         /// </summary>
         private readonly Dictionary<XNamespace, string> m_namespaceToPrefix = new Dictionary<XNamespace, string>();
 
+        public static string Prefix = "";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="YAXSerializer"/> class.
         /// </summary>
@@ -554,8 +556,8 @@ namespace YAXLib
                 // another base value such as System.Object but is provided with an
                 // object of its child
 
-                var ser = new YAXSerializer(obj.GetType(), m_exceptionPolicy, 
-                    m_defaultExceptionType, m_serializationOption);
+                var ser = new YAXSerializer(obj.GetType(), m_exceptionPolicy,
+                    m_defaultExceptionType, m_serializationOption) { };
                 ser.SetNamespaceToOverrideEmptyNamespace(TypeNamespace);
                 
                 //ser.SetBaseElement(insertionLocation);
@@ -1075,7 +1077,7 @@ namespace YAXLib
             }
 
             // serialize other non-collection members
-            var ser = new YAXSerializer(elementValue.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption);
+            var ser = new YAXSerializer(elementValue.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption) {  };
             ser.m_documentDefaultNamespace = m_documentDefaultNamespace;
             ser.SetNamespaceToOverrideEmptyNamespace(elementName.Namespace);
             ser.SetBaseElement(insertionLocation);
@@ -1307,7 +1309,7 @@ namespace YAXLib
             }
 
             // serialize other non-collection members
-            var ser = new YAXSerializer(elementValue.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption);
+            var ser = new YAXSerializer(elementValue.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption) {  };
             ser.m_documentDefaultNamespace = m_documentDefaultNamespace;
             ser.SetNamespaceToOverrideEmptyNamespace(elementName.Namespace);
             ser.SetBaseElement(insertionLocation);
@@ -1440,7 +1442,7 @@ namespace YAXLib
             }
             else
             {
-                var ser = new YAXSerializer(value.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption);
+                var ser = new YAXSerializer(value.GetType(), m_exceptionPolicy, m_defaultExceptionType, m_serializationOption) {  };
                 ser.m_documentDefaultNamespace = m_documentDefaultNamespace;
                 ser.SetNamespaceToOverrideEmptyNamespace(name.Namespace);
                 ser.SetBaseElement(insertionLocation);
@@ -1539,21 +1541,33 @@ namespace YAXLib
                 {
 
                     // find the parent element from its location
-                    XAttribute attr = XMLUtils.FindAttribute(baseElement, serializationLocation, member.Alias.OverrideNsIfEmpty(TypeNamespace));
+                    XAttribute attr = baseElement.Attribute(Prefix + "_" + member.Alias.LocalName);
+                        
                     if (attr == null) // if the parent element does not exist
                     {
-                        // loook for an element with the same name AND a yaxlib:realtype attribute
-                        XElement elem = XMLUtils.FindElement(baseElement, serializationLocation, member.Alias.OverrideNsIfEmpty(TypeNamespace));
-                        if (elem != null && elem.Attribute_NamespaceSafe(m_yaxLibNamespaceUri + m_trueTypeAttrName, m_documentDefaultNamespace) != null)
+                        //look for an element with ok ns
+                        XAttribute _attr = XMLUtils.FindAttribute(baseElement, serializationLocation, member.Alias.OverrideNsIfEmpty(TypeNamespace));
+                        if (_attr != null)
                         {
-                            elemValue = elem.Value;
-                            xelemValue = elem;
+                            foundAnyOfMembers = true;
+                            elemValue = _attr.Value;
+                            xattrValue = _attr;
                         }
                         else
                         {
-                            OnExceptionOccurred(new YAXAttributeMissingException(
-                                StringUtils.CombineLocationAndElementName(serializationLocation, member.Alias)),
-                                (!member.MemberType.IsValueType && m_udtWrapper.IsNotAllowdNullObjectSerialization) ? YAXExceptionTypes.Ignore : member.TreatErrorsAs);
+                            // loook for an element with the same name AND a yaxlib:realtype attribute
+                            XElement elem = XMLUtils.FindElement(baseElement, serializationLocation, member.Alias.OverrideNsIfEmpty(TypeNamespace));
+                            if (elem != null && elem.Attribute_NamespaceSafe(m_yaxLibNamespaceUri + m_trueTypeAttrName, m_documentDefaultNamespace) != null)
+                            {
+                                elemValue = elem.Value;
+                                xelemValue = elem;
+                            }
+                            else
+                            {
+                                OnExceptionOccurred(new YAXAttributeMissingException(
+                                    StringUtils.CombineLocationAndElementName(serializationLocation, member.Alias)),
+                                    (!member.MemberType.IsValueType && m_udtWrapper.IsNotAllowdNullObjectSerialization) ? YAXExceptionTypes.Ignore : member.TreatErrorsAs);
+                            }
                         }
                     }
                     else
@@ -1756,7 +1770,10 @@ namespace YAXLib
             {
                 foreach (XElement element in baseElement.Elements())
                 {
+                    if (W.GetValue(o) == null)
+                        W.SetValue(o, Activator.CreateInstance(W.MemberType));
                     List<Type> CommonTypes = Assembly.GetAssembly(o.GetType()).GetTypes().ToList();
+                    CommonTypes = CommonTypes.Union(Assembly.GetEntryAssembly().GetTypes()).ToList();
                     Type CommonType = CommonTypes
                         .FirstOrDefault(X =>
                         {
@@ -1767,9 +1784,7 @@ namespace YAXLib
                         });
                     if (CommonType != null)
                     {
-                        if (W.GetValue(o) == null)
-                            W.SetValue(o, Activator.CreateInstance(W.MemberType));
-                        object Target = new YAXSerializer(CommonType, this.ExceptionHandlingPolicy).Deserialize(element);
+                        object Target = new YAXSerializer(CommonType, this.ExceptionHandlingPolicy) {  }.Deserialize(element);
                         (W.GetValue(o) as IList).Add(Target);
                     }
                         
@@ -2684,7 +2699,7 @@ namespace YAXLib
             }
             else
             {
-                var ser = new YAXSerializer(valueType, m_exceptionPolicy, m_defaultExceptionType, m_serializationOption);
+                var ser = new YAXSerializer(valueType, m_exceptionPolicy, m_defaultExceptionType, m_serializationOption) {  };
                 ser.m_documentDefaultNamespace = m_documentDefaultNamespace;
                 ser.SetNamespaceToOverrideEmptyNamespace(xnameValue.Namespace.IfEmptyThenNone());
                 valueValue = ser.DeserializeBase(baseElement.Element(xnameValue));

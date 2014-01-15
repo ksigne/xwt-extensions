@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,9 +54,11 @@
   <ItemGroup>
     <Compile Include="Bindings\CellViewFactory.cs" />
     <Compile Include="Bindings\DataField.cs" />
+    <Compile Include="Bindings\PathBind.cs" />
     <Compile Include="Bindings\TreeNode.cs" />
     <Compile Include="Bindings\ListBinding.cs" />
     <Compile Include="Bindings\TreeStoreWrapper.cs" />
+    <Compile Include="CanvasSystemDrawing\DrawingExtensions.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtTreeViewNode.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtListViewNode.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtComboBoxNode.cs" />
@@ -93,6 +96,12 @@
     <Compile Include="Markup\XwtWidgetNode.cs" />
     <Compile Include="Markup\XwtWindowNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\CarouselCircle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\CarouselTable.cs" />
+    <Compile Include="UI\Charts\SignalControl.cs" />
+    <Compile Include="UI\GradientButton.cs" />
     <Compile Include="WindowWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,9 @@
       <Project>{f1c4d174-c948-4d18-a125-f6855ef55683}</Project>
       <Name>YAXLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

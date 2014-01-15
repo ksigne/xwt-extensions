@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
+using XwtExtensions.Bindings;
 using YAXLib;
 
 namespace XwtExtensions.Markup.Widgets
@@ -32,15 +33,15 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Color = (Xwt.Drawing.Color)Parent.GetType().GetProperty(this.Source).GetValue(Parent);
+                Target.Color = (Xwt.Drawing.Color)PathBind.GetValue(Source, Parent);
                 Parent.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == this.Source)
-                        Xwt.Application.Invoke(() => Target.Color = (Xwt.Drawing.Color)Parent.GetType().GetProperty(e.PropertyName).GetValue(Parent));
+                    if (e.PropertyName == this.Source.Split('.')[0])
+                        Xwt.Application.Invoke(() => Target.Color = (Xwt.Drawing.Color)PathBind.GetValue(Source, Parent));
                 };
                 Target.ColorChanged += (o, e) =>
                 {
-                    Parent.GetType().GetProperty(this.Source).SetValue(Parent, Target.Color);
+                    PathBind.SetValue(Source, Parent, Target.Color);
                 };
             }
 

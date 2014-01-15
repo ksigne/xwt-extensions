@@ -49,14 +49,23 @@ namespace XwtExtensions.Markup.ComplexWidgets
                 {
                     foreach (XwtColumnDefinitionNode N in ColumnDefinition)
                     {
-                        IDataField X = Source.Fields[N.Source];
-                        ListViewColumn C = new ListViewColumn(N.Title, CellViewFactory.Make(X, N.Editable))
+                        if (Source.Fields.ContainsKey(N.Source))
                         {
-                            SortDataField = X,
-                            SortIndicatorVisible = N.Sortable,
-                            CanResize = N.Resizable
-                        };
-                        Target.Columns.Add(C);
+                            IDataField X = Source.Fields[N.Source];
+                            IDataField S = X;
+                            if (X.FieldType == typeof(DateTime))
+                            {
+                                S = Source.Fields[N.Source + "_sort"];
+                                X = Source.Fields[N.Source + "_text"];
+                            }
+                            ListViewColumn C = new ListViewColumn(N.Title, CellViewFactory.Make(X, N.Editable))
+                            {
+                                SortDataField = S,
+                                SortIndicatorVisible = N.Sortable,
+                                CanResize = N.Resizable
+                            };
+                            Target.Columns.Add(C);
+                        }
                     }
                 }                              
             }    

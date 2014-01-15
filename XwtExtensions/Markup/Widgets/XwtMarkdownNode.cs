@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XwtExtensions.Bindings;
 using YAXLib;
 
 namespace XwtExtensions.Markup.Widgets
@@ -24,15 +25,16 @@ namespace XwtExtensions.Markup.Widgets
 
             if (Source != "")
             {
-                Target.LoadText((string)Parent.GetType().GetProperty(this.Source).GetValue(Parent), Xwt.Formats.TextFormat.Markdown);
+                Target.LoadText((string)PathBind.GetValue(Source, Parent), Xwt.Formats.TextFormat.Markdown);
                 Parent.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == this.Source)
+                    if (e.PropertyName == this.Source.Split('.')[0])
                         Xwt.Application.Invoke(() =>
-                            Target.LoadText((string)Parent.GetType().GetProperty(this.Source).GetValue(Parent), Xwt.Formats.TextFormat.Markdown)
+                            Target.LoadText((string)PathBind.GetValue(Source, Parent), Xwt.Formats.TextFormat.Markdown)
                             );
                 };
             }
+            
 
             WindowController.TryAttachEvent(Target, "NavigateToUrl", Parent, Navigated);
             InitWidget(Target, Parent);

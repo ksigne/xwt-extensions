@@ -20,6 +20,8 @@ namespace XwtExtensions.Markup.ComplexWidgets
         [YAXAttributeForClass]
         public int Selection = 0;
         [YAXAttributeForClass]
+        public string DataSource = "";
+        [YAXAttributeForClass]
         public string Source = "";
         [YAXCollection(YAXCollectionSerializationTypes.Recursive)]
         public List<XwtColumnDefinitionNode> ColumnDefinition;
@@ -29,9 +31,9 @@ namespace XwtExtensions.Markup.ComplexWidgets
         public override Xwt.Widget Makeup(WindowWrapper Parent)
         {
             Xwt.ComboBox Target = new Xwt.ComboBox();
-            if (this.Source != "")
+            if (this.DataSource != "")
             {
-                Target.ItemsSource = (IListDataSource)Parent.GetType().GetField(this.Source).GetValue(Parent);
+                Target.ItemsSource = (IListDataSource)Parent.GetType().GetField(this.DataSource).GetValue(Parent);
                 Type BackgroundType = (Target.ItemsSource).GetType().GetGenericArguments()[0];
                 if (ColumnDefinition != null && ColumnDefinition.Count() > 0)
                 {
@@ -48,17 +50,32 @@ namespace XwtExtensions.Markup.ComplexWidgets
                 {
                     foreach (XwtSimpleBindingNode N in Items)
                     {
-                        object value = null;
-                        try
+                        if (N.Value != "")
                         {
-                            Target.ItemsSource = (IListDataSource)Parent.GetType().GetField(N.Value).GetValue(Parent);
+                            object value = Parent.GetType().GetField(N.Value).GetValue(Parent);
+                            Target.Items.Add(value, N.Text);
                         }
-                        catch { }
-                        Target.Items.Add(value, N.Text);
+                        else
+                        {
+                            Target.Items.Add((object)N.Text, N.Text);
+                        }
                     }
                 }            
             }
             Target.SelectedIndex = this.Selection;
+            if (this.Source != "")
+            {
+                Target.SelectedItem = PathBind.GetValue(Source, Parent);
+                Parent.PropertyChanged += (o, e) =>
+                {
+                    if (e.PropertyName == this.Source.Split('.')[0])
+                        Xwt.Application.Invoke(() => Target.SelectedItem = PathBind.GetValue(Source, Parent));
+                };
+                Target.SelectionChanged += (o, e) =>
+                {
+                    PathBind.SetValue(Source, Parent, Target.SelectedItem);
+                };
+            }
             WindowController.TryAttachEvent(Target, "SelectionChanged", Parent, Changed);
 
             InitWidget(Target, Parent);

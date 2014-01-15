@@ -1,0 +1,18 @@
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\XwtExtensions.dll
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\XwtExtensions.pdb
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\Xwt.dll
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\Xwt.pdb
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\obj\Debug\XwtExtensions.dll
+c:\users\lev\documents\visual studio 2013\Projects\XwtExtensions\XwtExtensions\obj\Debug\XwtExtensions.pdb
+C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\obj\Debug\XwtExtensions.csprojResolveAssemblyReference.cache
+C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.dll
+C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.pdb
+C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.xml
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\XwtExtensions.dll
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\XwtExtensions.pdb
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.dll
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.pdb
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.xml
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.csprojResolveAssemblyReference.cache
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.dll
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.pdb

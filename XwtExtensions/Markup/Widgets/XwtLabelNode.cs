@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
+using XwtExtensions.Bindings;
 using YAXLib;
 
 namespace XwtExtensions.Markup.Widgets
@@ -45,13 +46,13 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Text = (string)Parent.GetType().GetProperty(this.Source).GetValue(Parent);
+                Target.Text = (string)PathBind.GetValue(Source, Parent);
                 Parent.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == this.Source)
-                        Xwt.Application.Invoke(() => Target.Text = (string)Parent.GetType().GetProperty(e.PropertyName).GetValue(Parent));
+                    if (e.PropertyName == this.Source.Split('.')[0])
+                        Xwt.Application.Invoke(() => Target.Text = (string)PathBind.GetValue(Source, Parent));
                 };
-             }
+            }
             WindowController.TryAttachEvent(Target, "LinkClicked", Parent, LinkClicked);
             InitWidget(Target, Parent);
             return Target;

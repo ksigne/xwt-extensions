@@ -35,7 +35,7 @@ namespace XwtExtensions.Markup
         [YAXAttributeForClass()]
         public bool Resizable = true;
         [YAXAttributeForClass()]
-        public bool Visible = true;
+        public bool Visible = false;
         [YAXAttributeForClass()]
         public bool Fullscreen = false;
 

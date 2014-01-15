@@ -26,6 +26,10 @@ namespace XwtExtensions.Markup
         [YAXAttributeForClass]
         public double MinHeight = -1;
         [YAXAttributeForClass]
+        public double Width = -1;
+        [YAXAttributeForClass]
+        public double Height = -1;
+        [YAXAttributeForClass]
         public string BackgroundColor = "";
         [YAXAttributeForClass]
         public string Font = "";
@@ -49,6 +53,8 @@ namespace XwtExtensions.Markup
         public Xwt.CursorType Cursor = Xwt.CursorType.Arrow;
         [YAXAttributeForClass]
         public string TooltipText = null;
+        [YAXSerializeAs("ContextMenu")]
+        public XwtMenuNode ContextMenu;
         [YAXAttributeForClass]
         public string GotFocus = "";
         [YAXAttributeForClass]
@@ -59,11 +65,17 @@ namespace XwtExtensions.Markup
         public string MouseExited = "";
         [YAXAttributeForClass]
         public string MouseMoved = "";
+        [YAXAttributeForClass]
+        public string ButtonPressed = "";
+        [YAXAttributeForClass]
+        public string ButtonReleased = "";
 
         protected void InitWidget(Xwt.Widget Widget, WindowWrapper Parent)
         {
             Widget.MinHeight = this.MinHeight;
             Widget.MinWidth = this.MinWidth;
+            Widget.WidthRequest = this.Width;
+            Widget.HeightRequest = this.Height;
             if (this.BackgroundColor != "")
                 Widget.BackgroundColor = Xwt.Drawing.Color.FromName(this.BackgroundColor);
             if (this.Font != "")
@@ -78,11 +90,25 @@ namespace XwtExtensions.Markup
             Widget.Cursor = this.Cursor;
             Widget.HorizontalPlacement = this.HAlign;
             Widget.VerticalPlacement = this.VAlign;
+            if (this.ContextMenu != null)
+            {
+                Widget.ButtonPressed += (o, e) =>
+                {
+                    if (e.Button == Xwt.PointerButton.Right)
+                    {
+                        Xwt.Menu M = new Xwt.Menu();
+                        this.ContextMenu.Subitems.ForEach(X => M.Items.Add(X.Makeup(Parent)));
+                        M.Popup();
+                    }
+                };
+            }
             WindowController.TryAttachEvent(Widget, "MouseEntered", Parent, this.MouseEntered);
             WindowController.TryAttachEvent(Widget, "MouseExited", Parent, this.MouseExited);
             WindowController.TryAttachEvent(Widget, "MouseMoved", Parent, this.MouseMoved);
             WindowController.TryAttachEvent(Widget, "GotFocus", Parent, this.GotFocus);
             WindowController.TryAttachEvent(Widget, "LostFocus", Parent, this.LostFocus);
+            WindowController.TryAttachEvent(Widget, "ButtonPressed", Parent, this.ButtonPressed);
+            WindowController.TryAttachEvent(Widget, "ButtonReleased", Parent, this.ButtonReleased);
             if (this.Name != "")
             {
                 Parent.Widgets.Add(this.Name, Widget);

@@ -65,8 +65,9 @@ namespace XwtExtensions.Markup.ComplexWidgets
                         Target.Columns.Add(C);
                     }
                 }                              
-            }    
-            Target.SelectRow(this.Selection);
+            }
+            if (Target.DataSource != null && Target.DataSource.RowCount > 0)
+                Target.SelectRow(this.Selection);
             WindowController.TryAttachEvent(Target, "SelectionChanged", Parent, Changed);
             WindowController.TryAttachEvent(Target, "RowActivated", Parent, Clicked);
             InitWidget(Target, Parent);

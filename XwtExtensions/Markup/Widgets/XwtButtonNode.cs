@@ -18,6 +18,14 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string Text = "";
         [YAXAttributeForClass]
+        public string Image = "";
+        [YAXAttributeForClass]
+        public double ImageWidth = 0;
+        [YAXAttributeForClass]
+        public double ImageHeight = 0;
+        [YAXAttributeForClass]
+        public Xwt.ContentPosition ImagePosition = Xwt.ContentPosition.Center;
+        [YAXAttributeForClass]
         public bool UseMnemonic = false;
         [YAXAttributeForClass]
         public string Clicked = "";
@@ -30,6 +38,11 @@ namespace XwtExtensions.Markup.Widgets
                 Type = this.Type,
                 UseMnemonic = this.UseMnemonic
             };
+            if (this.Image != "")
+            {
+                    Target.Image = Xwt.Drawing.Image.FromFile(this.Image).WithSize(this.ImageWidth, this.ImageHeight);
+                    Target.ImagePosition = this.ImagePosition;
+            }
             WindowController.TryAttachEvent(Target, "Clicked", Parent, Clicked);
             InitWidget(Target, Parent);
             return Target;

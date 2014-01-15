@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
+using XwtExtensions.Bindings;
 using YAXLib;
 
 namespace XwtExtensions.Markup.Widgets
@@ -45,21 +46,22 @@ namespace XwtExtensions.Markup.Widgets
             if (this.ReadOnly == true)
                 Target.ReadOnly = true;
             //Binding
+            WindowController.TryAttachEvent(Target, "Changed", Parent, Changed);
+            WindowController.TryAttachEvent(Target, "Activated", Parent, Activated);
             if (Source != "")
             {
-                Target.Text = (string)Parent.GetType().GetProperty(this.Source).GetValue(Parent);
+                Target.Text = (string)PathBind.GetValue(Source, Parent);
                 Parent.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == this.Source)
-                        Xwt.Application.Invoke(() => Target.Text = (string)Parent.GetType().GetProperty(e.PropertyName).GetValue(Parent));
+                    if (e.PropertyName == this.Source.Split('.')[0])
+                        Xwt.Application.Invoke(() => Target.Text = (string)PathBind.GetValue(Source, Parent));
                 };
                 Target.Changed += (o, e) =>
                 {
-                    Parent.GetType().GetProperty(this.Source).SetValue(Parent, Target.Text);
+                    PathBind.SetValue(Source, Parent, Target.Text);
                 };
             }
-            WindowController.TryAttachEvent(Target, "Changed", Parent, Changed);
-            WindowController.TryAttachEvent(Target, "Activated", Parent, Activated);
+
             InitWidget(Target, Parent);
             return Target;
         }

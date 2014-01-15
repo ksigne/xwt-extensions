@@ -37,7 +37,7 @@ namespace XwtExtensions.Markup.Widgets
             {
                 Xwt.Widget TWidget;
                 if (Node.Items != null && Node.Items.Count() > 0)
-                    TWidget = Node.Items[0].Makeup(Parent);
+                    TWidget = Node.Items[0].Makeup(Parent); 
                 else TWidget = new Xwt.VBox();
                 Target.Add(TWidget, Node.Text);
             }

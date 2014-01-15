@@ -15,15 +15,15 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public double BorderWidth = 1;
         [YAXAttributeForClass]
-        public string Text = "";
+        public string Text = null;
         [YAXAttributeForClass]
-        public double PaddingLeft = 10;
+        public double PaddingLeft = 0;
         [YAXAttributeForClass]
-        public double PaddingRight = 10;
+        public double PaddingRight = 0;
         [YAXAttributeForClass]
-        public double PaddingTop = 10;
+        public double PaddingTop = 0;
         [YAXAttributeForClass]
-        public double PaddingBottom = 10;
+        public double PaddingBottom = 0;
         [YAXAttributeForClass]
         public string BorderColor = "";
 
@@ -33,7 +33,6 @@ namespace XwtExtensions.Markup.Widgets
         public override Xwt.Widget Makeup(WindowWrapper Parent)
         {
             Xwt.Frame Target;
-
             Target = new Xwt.Frame()
             {
                 PaddingLeft = this.PaddingLeft,

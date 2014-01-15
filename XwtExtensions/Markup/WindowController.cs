@@ -44,7 +44,7 @@ namespace XwtExtensions
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Не удается определить событие " + TargetEvent + " методом " + HandlerMethod+": "+e.Message);
+                    System.Diagnostics.Debug.WriteLine("Не удается определить событие " + TargetEvent + " методом " + HandlerMethod+": "+e.Message);
                 }
             }
             return false;

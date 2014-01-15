@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
+using XwtExtensions.Bindings;
 using YAXLib;
 
 namespace XwtExtensions.Markup.Widgets
@@ -31,15 +32,15 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Password = (string)Parent.GetType().GetProperty(this.Source).GetValue(Parent);
+                Target.Password = (string)PathBind.GetValue(Source, Parent);
                 Parent.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == this.Source)
-                        Xwt.Application.Invoke(() => Target.Password = (string)Parent.GetType().GetProperty(e.PropertyName).GetValue(Parent));
+                    if (e.PropertyName == this.Source.Split('.')[0])
+                        Xwt.Application.Invoke(() => Target.Password = (string)PathBind.GetValue(Source, Parent));
                 };
                 Target.Changed += (o, e) =>
                 {
-                    Parent.GetType().GetProperty(this.Source).SetValue(Parent, Target.Password);
+                    PathBind.SetValue(Source, Parent, Target.Password);
                 };
             }
 
