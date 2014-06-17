@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using Xwt;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Notebook")]
@@ -23,7 +23,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtNotebookTabNode> Tabs;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Notebook Target = new Xwt.Notebook()
             {

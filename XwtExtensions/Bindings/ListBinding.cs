@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XwtExtensions.Bindings
+namespace Xwt.Ext.Bindings
 {
     public class ListBinding<T>: IList<T>, Xwt.IListDataSource
     {
@@ -23,6 +23,7 @@ namespace XwtExtensions.Bindings
 
         public ListBinding () {
             Fields = typeof(T).GetFields();
+            Base = new List<T>();
         }
 
         public ListBinding(List<T> Base)
@@ -62,7 +63,8 @@ namespace XwtExtensions.Bindings
         public void Insert(int index, T item)
         {
             Base.Insert(index, item);
-            RowInserted(this, new Xwt.ListRowEventArgs(index));
+            if (RowInserted != null)
+                RowInserted(this, new Xwt.ListRowEventArgs(index));
         }
 
         public void RemoveAt(int index)
@@ -80,20 +82,23 @@ namespace XwtExtensions.Bindings
             set
             {
                 Base[index] = value;
-                RowChanged(this, new Xwt.ListRowEventArgs(index));
+                if (RowChanged != null)
+                    RowChanged(this, new Xwt.ListRowEventArgs(index));
             }
         }
 
         public void Add(T item)
         {
             Base.Add(item);
-            RowInserted(this, new Xwt.ListRowEventArgs(Base.Count()));
+            if (RowInserted != null)
+                RowInserted(this, new Xwt.ListRowEventArgs(Base.Count()));
         }
 
         public void Clear()
         {
             for (int i = 0; i < Base.Count(); i++)
-                RowDeleted(this, new Xwt.ListRowEventArgs(i));
+                if (RowDeleted != null)
+                    RowDeleted(this, new Xwt.ListRowEventArgs(i));
                 Base.Clear();
         }
 

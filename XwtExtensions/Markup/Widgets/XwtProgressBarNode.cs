@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt.Backends;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("ProgressBar")]
@@ -20,7 +20,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public bool Indeterminate = false;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.ProgressBar Target = new Xwt.ProgressBar()
             {
@@ -31,11 +31,11 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Fraction = (double)PathBind.GetValue(Source, Parent);
+                Target.Fraction = (double)PathBind.GetValue(Source, Parent, 0);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.Fraction = (double)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.Fraction = (double)PathBind.GetValue(Source, Parent, 0));
                 };
             }
 

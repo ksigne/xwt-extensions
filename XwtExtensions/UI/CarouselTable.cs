@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Xwt;
 using Xwt.Drawing;
 using Xwt.Motion;
-using XwtExtensions.CanvasSystemDrawing;
+using Xwt.Ext.CanvasSystemDrawing;
 
-namespace XwtExtensions.UI
+namespace Xwt.Ext.UI
 {
    
     public class CarouselTable : Xwt.Canvas
@@ -157,6 +157,9 @@ namespace XwtExtensions.UI
                         Parent.QueueDraw();
                     }
                 );
+
+                Parent.T.Stop();
+                Parent.T.Start();
             }
 
             public void Init()
@@ -195,6 +198,8 @@ namespace XwtExtensions.UI
             LeftMargin = 30,
             Padding = 20;
 
+        System.Timers.Timer T = new System.Timers.Timer(10000);
+
         public CarouselTable(List<GradientButton> Buttons)
         {
             this.Buttons = Buttons;
@@ -204,7 +209,7 @@ namespace XwtExtensions.UI
             };
             Layout.Init();
             Layout.Layout();
-            System.Timers.Timer T = new System.Timers.Timer(10000);
+            
             T.Elapsed += (o, e) =>
             {
                 Xwt.Application.Invoke(() =>
@@ -236,44 +241,56 @@ namespace XwtExtensions.UI
         protected override void OnButtonPressed(ButtonEventArgs args)
         {
             GradientButton B = Buttons.FirstOrDefault(X => CheckIfIn(args.Position, X));
-            try
+            if (B != null)
             {
-                B.RaiseButtonPressed();
-            }
-            catch (Exception e)
-            {
-                Xwt.MessageDialog.ShowError(String.Format("Не удается выполнить {0}: {1}", B.Text, e.Message));
+                try
+                {
+                    B.RaiseButtonPressed();
+                }
+                catch (Exception e)
+                {
+                    Xwt.MessageDialog.ShowError(String.Format("Не удается выполнить {0}: {1}", B.Text, e.Message));
+                }
             }
         }
 
         protected override void OnMouseMoved(MouseMovedEventArgs args)
         {
-            GradientButton B = Buttons.FirstOrDefault(X => CheckIfIn(args.Position, X));
+            var scaledPos = new Xwt.Point(args.X, args.Y);
+            GradientButton B = Buttons.FirstOrDefault(X => CheckIfIn(scaledPos, X));
             if (B != null && B != Layout.PrimaryButton && !this.AnimationIsRunning(""))
                 Layout.MakePrimary(B);
         }
         protected override void OnDraw(Xwt.Drawing.Context ctx, Xwt.Rectangle dirtyRect)
         {
-            System.Drawing.Bitmap B = new System.Drawing.Bitmap((int)dirtyRect.Width, (int)dirtyRect.Height);
-            System.Drawing.Graphics G = System.Drawing.Graphics.FromImage(B);
+            if (ParentWindow.Visible)
+            {
+                System.Drawing.Bitmap B = new System.Drawing.Bitmap((int)(dirtyRect.Width * this.ParentWindow.Screen.ScaleFactor), (int)(dirtyRect.Height * this.ParentWindow.Screen.ScaleFactor));
+                System.Drawing.Graphics G = System.Drawing.Graphics.FromImage(B);
 
-            G.FillRectangle(
-                new System.Drawing.SolidBrush(System.Drawing.Color.White),
-                new System.Drawing.Rectangle(0, 0, (int)dirtyRect.Width - 1, (int)dirtyRect.Height - 1)
-            );
-            List<GradientButton> S = this.Buttons.OrderBy(X => X.CurrentMode).ToList();
-            S.ForEach(X =>X.Draw(G, new System.Drawing.PointF((float)X.Position.X, (float)X.Position.Y)));
-            ctx.DrawImage(B, new Point(0, 0));
+                G.FillRectangle(
+                    new System.Drawing.SolidBrush(System.Drawing.Color.White),
+                    new System.Drawing.Rectangle(0, 0, B.Width - 1, B.Height - 1)
+                );
+                List<GradientButton> S = this.Buttons.OrderBy(X => X.CurrentMode).ToList();
+                S.ForEach(X =>
+                    {
+                        X.DrawDescription = (X.Size.Width != this.ButtonSize);
+                        X.DrawImg = true;
+                        X.Draw(G, new System.Drawing.PointF((float)X.Position.X, (float)X.Position.Y), this.ParentWindow.Screen.ScaleFactor);
+                    });
+                ctx.DrawImage(B, new Point(0, 0), this.ParentWindow.Screen.ScaleFactor);
+            }
         }
     }
 
     [YAXLib.YAXSerializableType(FieldsToSerialize = YAXLib.YAXSerializationFields.AllFields)]
     [YAXLib.YAXSerializeAs("CarouselTable")]
-    public class CarouselTableNode: XwtExtensions.Markup.XwtWidgetNode
+    public class CarouselTableNode: Xwt.Ext.Markup.XwtWidgetNode
     {
         [YAXLib.YAXCollection(YAXLib.YAXCollectionSerializationTypes.Recursive)]
         public List<GradientButtonNode> Nodes;
-        public override Widget Makeup(WindowWrapper Parent)
+        public override Widget Makeup(IXwtWrapper Parent)
         {
             List<GradientButton> L = new List<GradientButton>();
             foreach (GradientButtonNode B in Nodes)
@@ -282,8 +299,7 @@ namespace XwtExtensions.UI
                 L.Add(T);
             }
 
-            XwtExtensions.UI.CarouselTable Target = new XwtExtensions.UI.CarouselTable(L);
-           
+            Xwt.Ext.UI.CarouselTable Target = new Xwt.Ext.UI.CarouselTable(L);
             InitWidget(Target, Parent);
             return Target;
         }

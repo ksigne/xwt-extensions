@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.ComplexWidgets
+namespace Xwt.Ext.Markup.ComplexWidgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("ListView")]
@@ -36,7 +36,7 @@ namespace XwtExtensions.Markup.ComplexWidgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtColumnDefinitionNode> ColumnDefinition;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.ListView Target = new Xwt.ListView()
             {

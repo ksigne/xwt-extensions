@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("DatePicker")]
@@ -22,7 +22,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string Changed = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.DatePicker Target = new Xwt.DatePicker()
             {
@@ -39,11 +39,11 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.DateTime = (DateTime)PathBind.GetValue(Source, Parent);
+                Target.DateTime = (DateTime)PathBind.GetValue(Source, Parent, DateTime.Now);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.DateTime = (DateTime)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.DateTime = (DateTime)PathBind.GetValue(Source, Parent, DateTime.Now));
                 };
                 Target.ValueChanged += (o, e) =>
                 {

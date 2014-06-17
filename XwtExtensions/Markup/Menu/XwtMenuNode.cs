@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Menu")]
@@ -15,7 +15,7 @@ namespace XwtExtensions.Markup
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtMenuItemNode> Subitems;
 
-        public Xwt.Menu Makeup(WindowWrapper Parent)
+        public Xwt.Menu Makeup(IXwtWrapper Parent)
         {
             Xwt.Menu Target = new Xwt.Menu();
 

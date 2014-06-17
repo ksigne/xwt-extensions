@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Password")]
@@ -22,7 +22,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string Activated = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.PasswordEntry Target = new Xwt.PasswordEntry()
             {
@@ -32,11 +32,11 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Password = (string)PathBind.GetValue(Source, Parent);
+                Target.Password = (string)PathBind.GetValue(Source, Parent, "");
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.Password = (string)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.Password = (string)PathBind.GetValue(Source, Parent, ""));
                 };
                 Target.Changed += (o, e) =>
                 {

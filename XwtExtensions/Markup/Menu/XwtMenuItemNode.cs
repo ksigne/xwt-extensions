@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Item")]
@@ -28,7 +28,7 @@ namespace XwtExtensions.Markup
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtMenuItemNode> Subitems;
 
-        protected void RegisterItem(WindowWrapper Parent, Xwt.MenuItem Widget)
+        protected void RegisterItem(IXwtWrapper Parent, Xwt.MenuItem Widget)
         {
             if (this.Name != "")
             {
@@ -39,7 +39,7 @@ namespace XwtExtensions.Markup
             }
         }
 
-        public virtual Xwt.MenuItem Makeup(WindowWrapper Parent)
+        public virtual Xwt.MenuItem Makeup(IXwtWrapper Parent)
         {
             Xwt.MenuItem Target = new Xwt.MenuItem() {
                 Label = Text,

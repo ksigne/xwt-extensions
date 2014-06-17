@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Label")]
@@ -30,7 +30,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string LinkClicked = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Label Target = new Xwt.Label()
             {
@@ -46,11 +46,11 @@ namespace XwtExtensions.Markup.Widgets
             //Binding
             if (Source != "")
             {
-                Target.Text = (string)PathBind.GetValue(Source, Parent);
+                Target.Text = (string)PathBind.GetValue(Source, Parent, "");
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.Text = (string)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.Text = (string)PathBind.GetValue(Source, Parent, ""));
                 };
             }
             WindowController.TryAttachEvent(Target, "LinkClicked", Parent, LinkClicked);

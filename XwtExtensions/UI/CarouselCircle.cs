@@ -7,7 +7,7 @@ using Xwt;
 using Xwt.Drawing;
 using Xwt.Motion;
 
-namespace XwtExtensions.UI
+namespace Xwt.Ext.UI
 {
     public class CarouselCircle : Xwt.Canvas
     {
@@ -123,6 +123,7 @@ namespace XwtExtensions.UI
                 Elements[new Random().Next(Elements.Count)].CurrentMode = true;
                 for (int i = 0; i < Elements.Count(); i++)
                 {
+                    Elements[i].DrawImg = true;
                     Elements[i].Color = Elements[i].Color.BlendWith(Xwt.Drawing.Colors.Blue, (double)i / Elements.Count);
                 }
             }
@@ -165,7 +166,10 @@ namespace XwtExtensions.UI
             {
                 Xwt.Application.Invoke(() =>
                 {
-                    Layout.MakePrimary(Layout.Elements[new Random().Next(Layout.Elements.Count())]);
+                    if (ParentWindow != null && ParentWindow.Visible)
+                    {
+                        Layout.MakePrimary(Layout.Elements[new Random().Next(Layout.Elements.Count())]);
+                    }
                 });
             };
 
@@ -185,7 +189,7 @@ namespace XwtExtensions.UI
 
         void DrawGradientButton(Xwt.Drawing.Context G, GradientButton B)
         {
-            DrawingPath P = new DrawingPath();
+            /*DrawingPath P = new DrawingPath();
             P.Rectangle(new Xwt.Rectangle(B.Position, B.Size));
             LinearGradient gr;
             G.AppendPath(P);
@@ -199,14 +203,16 @@ namespace XwtExtensions.UI
             G.SetLineWidth(1);
             
             /*G.AppendPath(P);
-            G.Stroke();*/
+            G.Stroke();*/ /*
             TextLayout L = new TextLayout()
             {
                 Font = B.Font,
                 Text = B.Text
             };
             Size TextSize = new Size(0.6 * L.Font.Size * L.Text.Count(), L.Font.Size);
-            G.DrawTextLayout(L, new Xwt.Point(B.Position.X + B.Size.Width / 2 - TextSize.Width / 2, B.Position.Y + B.Size.Height / 2 - TextSize.Height / 2));
+            G.DrawTextLayout(L, new Xwt.Point(B.Position.X + B.Size.Width / 2 - TextSize.Width / 2, B.Position.Y + B.Size.Height / 2 - TextSize.Height / 2));*/
+
+
         }
 
         protected override void OnButtonPressed(ButtonEventArgs args)
@@ -231,38 +237,41 @@ namespace XwtExtensions.UI
         protected override void OnDraw(Xwt.Drawing.Context ctx, Xwt.Rectangle dirtyRect)
         {
 
-            ctx.Rectangle(dirtyRect);
+            /*ctx.Rectangle(dirtyRect);
             ctx.SetColor(Colors.White);
-            ctx.Fill();
+            ctx.Fill();*/
+            System.Drawing.Bitmap B = new System.Drawing.Bitmap(
+                (int)(dirtyRect.Width*ParentWindow.Screen.ScaleFactor),
+                (int)(dirtyRect.Height*ParentWindow.Screen.ScaleFactor)
+                );
+            System.Drawing.Graphics G = System.Drawing.Graphics.FromImage(B);
+            G.FillRectangle(
+                new System.Drawing.SolidBrush(System.Drawing.Color.White),
+                new System.Drawing.Rectangle(0, 0, (int)B.Width, (int)B.Height)
+            );
             List<GradientButton> S = this.Buttons.OrderBy(X => X.CurrentMode).ToList();
-            S.ForEach(X => DrawGradientButton(ctx, X));
+            S.ForEach(X => X.DrawImg = true);
+            S.ForEach(X => X.Draw(G, new System.Drawing.PointF((float)X.Position.X, (float)X.Position.Y), this.ParentWindow.Screen.ScaleFactor));
+            Xwt.Ext.CanvasSystemDrawing.DrawingExtensions.DrawImage(ctx, B, new Point(0, 0), this.ParentWindow.Screen.ScaleFactor);
         }
     }
 
     [YAXLib.YAXSerializableType(FieldsToSerialize = YAXLib.YAXSerializationFields.AllFields)]
     [YAXLib.YAXSerializeAs("CarouselCircle")]
-    public class CarouselCircleNode : XwtExtensions.Markup.XwtWidgetNode
+    public class CarouselCircleNode : Xwt.Ext.Markup.XwtWidgetNode
     {
         [YAXLib.YAXCollection(YAXLib.YAXCollectionSerializationTypes.Recursive)]
         public List<GradientButtonNode> Nodes;
-        public override Widget Makeup(WindowWrapper Parent)
+        public override Widget Makeup(IXwtWrapper Parent)
         {
             List<GradientButton> L = new List<GradientButton>();
             foreach (GradientButtonNode B in Nodes)
             {
-                GradientButton T = new GradientButton()
-                {
-                    Text = B.Text
-                };
-                if (B.Font != "")
-                    T.Font = Xwt.Drawing.Font.FromName(B.Font);
-                if (B.Color != "")
-                    T.Color = Xwt.Drawing.Color.FromName(B.Color);
-                WindowController.TryAttachEvent(T, "ButtonPressed", Parent, B.Clicked);
+                GradientButton T = B.Makeup(Parent);
                 L.Add(T);
             }
 
-            XwtExtensions.UI.CarouselCircle Target = new XwtExtensions.UI.CarouselCircle(L);
+            Xwt.Ext.UI.CarouselCircle Target = new Xwt.Ext.UI.CarouselCircle(L);
 
             InitWidget(Target, Parent);
             return Target;

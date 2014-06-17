@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XwtExtensions.CanvasSystemDrawing
+namespace Xwt.Ext.CanvasSystemDrawing
 {
     public static class DrawingExtensions
     {
-        public static void DrawImage(this Xwt.Drawing.Context ctx, System.Drawing.Bitmap image, Xwt.Point where)
+        public static void DrawImage(this Xwt.Drawing.Context ctx, System.Drawing.Bitmap image, Xwt.Point where, double Scaling = 1, bool IncludeAlpha = false)
         {
             using (System.IO.MemoryStream M = new System.IO.MemoryStream())
             {
-                image.Save(M, System.Drawing.Imaging.ImageFormat.Bmp);
+                image.Save(M, IncludeAlpha?System.Drawing.Imaging.ImageFormat.Png:System.Drawing.Imaging.ImageFormat.Bmp);
                 M.Position = 0;
-                ctx.DrawImage(Xwt.Drawing.Image.FromStream(M), where);
+                ctx.DrawImage(Xwt.Drawing.Image.FromStream(M), new Xwt.Rectangle(where, new Xwt.Size(image.Width/Scaling, image.Height/Scaling)));
             }
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Table")]
@@ -20,7 +20,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtWidgetNode> Items;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Table Target = new Xwt.Table()
             {

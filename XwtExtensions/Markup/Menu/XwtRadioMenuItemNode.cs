@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("RadioItem")]
@@ -16,7 +16,7 @@ namespace XwtExtensions.Markup
         public string Group = "";
         [YAXAttributeForClass]
         public bool Checked = false;
-        public override Xwt.MenuItem Makeup(WindowWrapper Parent)
+        public override Xwt.MenuItem Makeup(IXwtWrapper Parent)
         {
             Xwt.RadioButtonMenuItem Target = new Xwt.RadioButtonMenuItem() {
                 Label = Text,

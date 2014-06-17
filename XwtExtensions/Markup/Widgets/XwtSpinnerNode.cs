@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize=YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Spinner")]
@@ -14,7 +14,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public bool Animate = true;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Spinner Target = new Xwt.Spinner() {
                 Animate = this.Animate

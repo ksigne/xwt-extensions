@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using Xwt;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("ScrollView")]
@@ -25,7 +25,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtWidgetNode> Items;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.ScrollView Target = new Xwt.ScrollView()
             {

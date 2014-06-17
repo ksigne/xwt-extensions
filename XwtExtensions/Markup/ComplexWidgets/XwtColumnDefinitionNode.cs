@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Column")]

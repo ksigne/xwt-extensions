@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize=YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Radio")]
@@ -23,7 +23,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtWidgetNode> Content;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.RadioButton Target = new Xwt.RadioButton(this.Text);
             if (this.Group != "")

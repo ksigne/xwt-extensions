@@ -4,10 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using XwtExtensions.Markup.Widgets;
+using Xwt.Ext.Markup.Widgets;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     public static class WindowFactory
     {

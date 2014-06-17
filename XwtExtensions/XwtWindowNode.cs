@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Window")]
@@ -49,27 +49,25 @@ namespace XwtExtensions.Markup
         public string BoundsChanged = "";
 
         [YAXSerializeAs("Content")]
-        public XwtExtensions.Markup.Widgets.XwtBoxNode Content;
+        public Xwt.Ext.Markup.Widgets.XwtBoxNode Content;
         [YAXSerializeAs("MainMenu")]
         public XwtMenuNode MainMenu;
 
-        public Xwt.Window Makeup(WindowWrapper Context)
+        public void Makeup(IXwtWrapper Context, Xwt.Window Target)
         {
-            Xwt.Window Target = new Xwt.Window()
-            {
-                Title = this.Title,
-                PaddingLeft = this.PaddingLeft,
-                PaddingRight = this.PaddingRight,
-                PaddingTop = this.PaddingTop,
-                PaddingBottom = this.PaddingBottom,
-                Width = this.Width,
-                Height = this.Height,
-                Decorated = this.Decorated,
-                ShowInTaskbar = this.ShowInTaskbar,
-                Resizable = this.Resizable,
-                Visible = this.Visible,
-                FullScreen = this.Fullscreen
-            };
+            Target.Title = this.Title;
+            Target.PaddingLeft = this.PaddingLeft;
+            Target.PaddingRight = this.PaddingRight;
+            Target.PaddingTop = this.PaddingTop;
+            Target.PaddingBottom = this.PaddingBottom;
+            Target.Width = this.Width;
+            Target.Height = this.Height;
+            Target.Decorated = this.Decorated;
+            Target.ShowInTaskbar = this.ShowInTaskbar;
+            Target.Resizable = this.Resizable;
+            Target.Visible = this.Visible;
+            Target.FullScreen = this.Fullscreen;
+            
             WindowController.TryAttachEvent(Target, "Shown", Context, Shown);
             WindowController.TryAttachEvent(Target, "Hidden", Context, Hidden);
             WindowController.TryAttachEvent(Target, "CloseRequested", Context, CloseRequested);
@@ -78,7 +76,6 @@ namespace XwtExtensions.Markup
                 Target.Content = Content.Makeup(Context);
             if (MainMenu != null)
                 Target.MainMenu = MainMenu.Makeup(Context);
-            return Target;
         }
     }
     

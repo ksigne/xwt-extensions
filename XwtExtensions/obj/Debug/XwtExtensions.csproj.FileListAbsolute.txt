@@ -8,11 +8,11 @@ C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\o
 C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.dll
 C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.pdb
 C:\Users\Lev\Documents\Visual Studio 2013\Projects\XwtExtensions\XwtExtensions\bin\Debug\YAXLib.xml
+C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.csprojResolveAssemblyReference.cache
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\XwtExtensions.dll
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\XwtExtensions.pdb
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.dll
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.pdb
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\bin\Debug\YAXLib.xml
-C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.csprojResolveAssemblyReference.cache
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.dll
 C:\Users\Lev\Documents\GitHub\xwt-extensions\XwtExtensions\obj\Debug\XwtExtensions.pdb

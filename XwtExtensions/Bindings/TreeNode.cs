@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xwt;
 
-namespace XwtExtensions.Bindings
+namespace Xwt.Ext.Bindings
 {
     public abstract class TreeNode: INotifyPropertyChanged
     {

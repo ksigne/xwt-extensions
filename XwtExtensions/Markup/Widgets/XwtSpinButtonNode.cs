@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize=YAXSerializationFields.AllFields)]
     [YAXSerializeAs("SpinButton")]
@@ -31,7 +31,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string ValueChanged = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.SpinButton Target = new Xwt.SpinButton()
             {
@@ -46,11 +46,11 @@ namespace XwtExtensions.Markup.Widgets
 
             if (Source != "")
             {
-                Target.Value = (double)PathBind.GetValue(Source, Parent);
+                Target.Value = (double)PathBind.GetValue(Source, Parent, 0);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.Value = (double)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.Value = (double)PathBind.GetValue(Source, Parent, 0));
                 };
                 Target.ValueChanged += (o, e) =>
                 {

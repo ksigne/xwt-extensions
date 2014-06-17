@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xwt;
-using XwtExtensions.Bindings;
+using Xwt.Ext.Bindings;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("CheckBox")]
@@ -28,7 +28,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public List<XwtWidgetNode> Content;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.CheckBox Target = new Xwt.CheckBox()
             {
@@ -45,11 +45,11 @@ namespace XwtExtensions.Markup.Widgets
             //Making binding
             if (Source != "")
             {
-                Target.Active = (bool)PathBind.GetValue(Source, Parent);
+                Target.Active = (bool)PathBind.GetValue(Source, Parent, false);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.Source.Split('.')[0])
-                        Xwt.Application.Invoke(() => Target.Active = (bool)PathBind.GetValue(Source, Parent));
+                        Xwt.Application.Invoke(() => Target.Active = (bool)PathBind.GetValue(Source, Parent, false));
                 };
                 Target.Toggled += (o, e) =>
                 {

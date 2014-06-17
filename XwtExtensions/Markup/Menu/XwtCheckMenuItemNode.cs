@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("CheckItem")]
@@ -14,7 +14,7 @@ namespace XwtExtensions.Markup
     {
         [YAXAttributeForClass]
         public bool Checked = false;
-        public override Xwt.MenuItem Makeup(WindowWrapper Parent)
+        public override Xwt.MenuItem Makeup(IXwtWrapper Parent)
         {
             Xwt.CheckBoxMenuItem Target = new Xwt.CheckBoxMenuItem() {
                 Label = Text,

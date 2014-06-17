@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Widgets
+namespace Xwt.Ext.Markup.Widgets
 {
     [YAXSerializableType(FieldsToSerialize=YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Button")]
@@ -30,7 +30,7 @@ namespace XwtExtensions.Markup.Widgets
         [YAXAttributeForClass]
         public string Clicked = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Button Target = new Xwt.Button(this.Text)
             {

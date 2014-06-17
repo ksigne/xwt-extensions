@@ -7,7 +7,7 @@
     <ProjectGuid>{B6530788-3904-4B07-B8EA-354871E4558F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XwtExtensions</RootNamespace>
+    <RootNamespace>Xwt.Ext</RootNamespace>
     <AssemblyName>XwtExtensions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -59,6 +59,7 @@
     <Compile Include="Bindings\ListBinding.cs" />
     <Compile Include="Bindings\TreeStoreWrapper.cs" />
     <Compile Include="CanvasSystemDrawing\DrawingExtensions.cs" />
+    <Compile Include="FrameExt.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtTreeViewNode.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtListViewNode.cs" />
     <Compile Include="Markup\ComplexWidgets\XwtComboBoxNode.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Markup\Menu\XwtRadioMenuItemNode.cs" />
     <Compile Include="Markup\Menu\XwtMenuNode.cs" />
     <Compile Include="Markup\Menu\XwtMenuItemNode.cs" />
+    <Compile Include="Markup\Widgets\XwtImgViewNode.cs" />
     <Compile Include="Markup\Widgets\XwtDatePicker.cs" />
     <Compile Include="Markup\Widgets\XwtColorSelector.cs" />
     <Compile Include="Markup\Widgets\XwtPasswordNode.cs" />
@@ -94,7 +96,8 @@
     <Compile Include="Markup\WindowController.cs" />
     <Compile Include="Markup\WindowFactory.cs" />
     <Compile Include="Markup\XwtWidgetNode.cs" />
-    <Compile Include="Markup\XwtWindowNode.cs" />
+    <Compile Include="UI\GDICanvas.cs" />
+    <Compile Include="XwtWindowNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\CarouselCircle.cs">
       <SubType>Code</SubType>
@@ -102,7 +105,8 @@
     <Compile Include="UI\CarouselTable.cs" />
     <Compile Include="UI\Charts\SignalControl.cs" />
     <Compile Include="UI\GradientButton.cs" />
-    <Compile Include="WindowWrapper.cs" />
+    <Compile Include="WindowExt.cs" />
+    <Compile Include="IXwtWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Markup\Drawing\" />

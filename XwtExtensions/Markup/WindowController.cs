@@ -5,13 +5,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XwtExtensions
+namespace Xwt.Ext
 {
     public static class WindowController
     {
         struct WidgetContext
         {
-            public WindowWrapper Context;
+            public IXwtWrapper Context;
             public string Name;
             public Xwt.XwtComponent Self;
         }
@@ -26,7 +26,7 @@ namespace XwtExtensions
             return AllWidgets.FirstOrDefault(Y => Y.Name == Name && Y.Context == AllWidgets.FirstOrDefault(X => X.Self == (Context as Xwt.XwtComponent)).Context).Self;
         }
 
-        public static void RegisterWidget(string Name, WindowWrapper Context, Xwt.XwtComponent W)
+        public static void RegisterWidget(string Name, IXwtWrapper Context, Xwt.XwtComponent W)
         {
             AllWidgets.Add(new WidgetContext { Name = Name, Context = Context, Self = W });
         }

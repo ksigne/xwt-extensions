@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 
-namespace XwtExtensions.Markup.Layouts
+namespace Xwt.Ext.Markup.Layouts
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Separator")]
@@ -14,7 +14,7 @@ namespace XwtExtensions.Markup.Layouts
         [YAXAttributeForClass]
         public Xwt.Backends.Orientation Orientation;
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             Xwt.Separator Target;
             if (this.Orientation == Xwt.Backends.Orientation.Horizontal)

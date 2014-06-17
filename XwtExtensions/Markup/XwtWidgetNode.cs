@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using YAXLib;
 
-namespace XwtExtensions.Markup
+namespace Xwt.Ext.Markup
 {
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public abstract class XwtWidgetNode
@@ -70,7 +70,7 @@ namespace XwtExtensions.Markup
         [YAXAttributeForClass]
         public string ButtonReleased = "";
 
-        protected void InitWidget(Xwt.Widget Widget, WindowWrapper Parent)
+        protected void InitWidget(Xwt.Widget Widget, IXwtWrapper Parent)
         {
             Widget.MinHeight = this.MinHeight;
             Widget.MinWidth = this.MinWidth;
@@ -112,12 +112,12 @@ namespace XwtExtensions.Markup
             if (this.Name != "")
             {
                 Parent.Widgets.Add(this.Name, Widget);
-                if (Parent.GetType().GetField(this.Name) != null)
-                    Parent.GetType().GetField(this.Name).SetValue(Parent, Widget);
+                if (Parent.GetType().GetField(this.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) != null)
+                    Parent.GetType().GetField(this.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).SetValue(Parent, Widget);
                 WindowController.RegisterWidget(this.Name, Parent, Widget);
             }
         }
 
-        public abstract Xwt.Widget Makeup(WindowWrapper Parent);
+        public abstract Xwt.Widget Makeup(IXwtWrapper Parent);
     }
 }

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using XwtExtensions.Bindings;
-using XwtExtensions.CanvasSystemDrawing;
+using Xwt.Ext.Bindings;
+using Xwt.Ext.CanvasSystemDrawing;
 using YAXLib;
 
-namespace XwtExtensions.UI.Charts
+namespace Xwt.Ext.UI.Charts
 {
     public struct SignalControlTheme
     {
@@ -126,7 +126,7 @@ namespace XwtExtensions.UI.Charts
         protected override void OnDraw(Xwt.Drawing.Context ctx, Xwt.Rectangle dirtyRect)
         {
             int width = (int)this.Size.Width, height = (int)this.Size.Height;
-            ctx.DrawImage(Build(width, height), new Xwt.Point(0, 0));
+            ctx.DrawImage(Build(width, height), new Xwt.Point(0, 0), this.ParentWindow.Screen.ScaleFactor);
         }
 
         protected override void OnButtonPressed(Xwt.ButtonEventArgs args)
@@ -290,7 +290,7 @@ namespace XwtExtensions.UI.Charts
             G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            G.FillRectangle(new SolidBrush(CurrentTheme.BackgroundColor.ToWindowsColor()), new Rectangle(new Point(0, 0), new Size(width, height)));
+            G.FillRectangle(new SolidBrush(CurrentTheme.BackgroundColor.ToWindowsColor()), new System.Drawing.Rectangle(new System.Drawing.Point(0, 0), new System.Drawing.Size(width, height)));
             if (!Selecting)
                 G.FillRectangle(new SolidBrush(CurrentTheme.SelectionColor.ToWindowsColor()), new RectangleF(new PointF(DataToX(SelectionStart, width), 0), new SizeF(DataToX(SelectionEnd, width) - DataToX(SelectionStart, width), height)));
 
@@ -323,7 +323,7 @@ namespace XwtExtensions.UI.Charts
 
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     [YAXSerializeAs("Signal")]
-    public class SignalWidgetNode: XwtExtensions.Markup.XwtWidgetNode
+    public class SignalWidgetNode: Xwt.Ext.Markup.XwtWidgetNode
     {
         [YAXAttributeForClass]
         public string DataSource = "";
@@ -332,18 +332,18 @@ namespace XwtExtensions.UI.Charts
         [YAXAttributeForClass]
         public string FreqSource = "";
 
-        public override Xwt.Widget Makeup(WindowWrapper Parent)
+        public override Xwt.Widget Makeup(IXwtWrapper Parent)
         {
             SignalControl Target = new SignalControl();
             if (DataSource != "")
             {
-                Target.Data = (List<double>)PathBind.GetValue(DataSource, Parent);
+                Target.Data = (List<double>)PathBind.GetValue(DataSource, Parent, new List<double> () {0});
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.DataSource.Split('.')[0])
                         Xwt.Application.Invoke(() =>
                         {
-                            Target.Data = (List<double>)PathBind.GetValue(DataSource, Parent);
+                            Target.Data = (List<double>)PathBind.GetValue(DataSource, Parent, new List<double> () {0});
                             Target.QueueDraw();
                         });
                 };
@@ -351,13 +351,13 @@ namespace XwtExtensions.UI.Charts
 
             if (ThemeSource != "")
             {
-                Target.CurrentTheme = (SignalControlTheme)PathBind.GetValue(ThemeSource, Parent);
+                Target.CurrentTheme = (SignalControlTheme)PathBind.GetValue(ThemeSource, Parent, SignalControlTheme.Default);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.ThemeSource.Split('.')[0])
                         Xwt.Application.Invoke(() =>
                         {
-                            Target.CurrentTheme = (SignalControlTheme)PathBind.GetValue(ThemeSource, Parent);
+                            Target.CurrentTheme = (SignalControlTheme)PathBind.GetValue(ThemeSource, Parent, SignalControlTheme.Default);
                             Target.QueueDraw();
                         });
                 };
@@ -365,13 +365,13 @@ namespace XwtExtensions.UI.Charts
 
             if (FreqSource != "")
             {
-                Target.Freq = (double)PathBind.GetValue(FreqSource, Parent);
+                Target.Freq = (double)PathBind.GetValue(FreqSource, Parent, 0);
                 Parent.PropertyChanged += (o, e) =>
                 {
                     if (e.PropertyName == this.FreqSource.Split('.')[0])
                         Xwt.Application.Invoke(() =>
                         {
-                            Target.Freq = (double)PathBind.GetValue(FreqSource, Parent);
+                            Target.Freq = (double)PathBind.GetValue(FreqSource, Parent, 0);
                             Target.QueueDraw();
                         });
                 };
